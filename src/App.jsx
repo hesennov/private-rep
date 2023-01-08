@@ -1,34 +1,54 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { useState, useEffect } from "react";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [data, setData] = useState([]);
+  const addPost = (data) => {
+    const headers = new Headers();
+    headers.append("Content-type", "aplication/json");
+    headers.append('authorization', "Bearer hesen 1231234567890");
+
+    fetch("https://jsonplaceholder.typicode.com/posts", {
+      method: "POST",
+      body: JSON.stringify(data),
+      // headers: {
+      //   authorization: "12312434134123",
+      // },
+      headers,
+    });
+  };
+  const fetchingData = () => {
+    fetch("https://jsonplaceholder.typicode.com/posts")
+      .then((res) => {
+        if (res.ok && res.status === 200) {
+          return res.json();
+        }
+      })
+      .then((posts) => setData(posts))
+      .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    addPost({
+      userId: 1234,
+      id: 2234,
+      title: "test deneme 123",
+      body: "HER ŞEY ENERJİDİR VE HER ŞEY YALNIZCA BUNDAN İBARETTİR",
+    });
+    fetchingData();
+  }, []);
 
   return (
     <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <ul>
+        {data.map((post) => (
+          <>
+            <li key={post.id}>{post.title}</li>
+          </>
+        ))}
+      </ul>
+      <button onClick={fetchingData}>FEtchingData</button>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
