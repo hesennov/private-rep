@@ -6,11 +6,17 @@ function App() {
   const addPost = (data) => {
     const headers = new Headers();
     headers.append("Content-type", "aplication/json");
-    headers.append('authorization', "Bearer hesen 1231234567890");
+    headers.append("authorization", "Bearer hesen 1231234567890");
+
+    const formData = new FormData();
+
+    formData.append("userId", data.userId);
+    formData.append("title", data.title);
+    formData.append("body", data.body);
 
     fetch("https://jsonplaceholder.typicode.com/posts", {
       method: "POST",
-      body: JSON.stringify(data),
+      body: formData,
       // headers: {
       //   authorization: "12312434134123",
       // },
