@@ -16,6 +16,7 @@ function App() {
 
     fetch("https://jsonplaceholder.typicode.com/posts", {
       method: "POST",
+      // body: JSOB.stringfy(data),
       body: formData,
       // headers: {
       //   authorization: "12312434134123",
@@ -46,7 +47,7 @@ function App() {
   return (
     <div className="App">
       <ul>
-        {data.map((post) => (
+        {data?.map((post) => (
           <>
             <li key={post.id}>{post.title}</li>
           </>
